@@ -510,7 +510,6 @@ All blocks have a list of reserved attributes you can configure on them in the W
 The attributes follow the same structure our normal embedcodes do, with the ~data-*~ prefix removed.
 Eg. ~data-template => template~
 
-
 * Debugging
 
 * References
@@ -519,6 +518,6 @@ https://www.wix.com/velo/reference/api-overview/introduction
 
 https://www.wix.com/velo/reference/$w
 
-
+https://support.wix.com/en/article/wix-editor-adding-a-custom-element-to-your-site
 
 https://support.wix.com/en/article/embedding-custom-code-on-your-site
