@@ -16,7 +16,7 @@ As a result the code for Clerk is segmented in 4 main sections:
 - Affiliate tracking script.
 _{ Clerk.js, located in a field outside the Editor or Theme. }
 
-- Utility Functions
+- Utility functions.
 _{ Utility function library located in the Theme ~public~ resource. }
 
 - Custom element scripts.
@@ -25,6 +25,30 @@ _{ A number of custom-element.js files located in the Theme ~public/custom-eleme
 - Element hydration scripts.
 _{ A number of snippets placed in the appropriate controllers page.js file which hydrate elements with contextual data before hydration. }
 
+* Affiliate Tracking Script
+
+This script loads the Clerk.js library and class into the window. This is needed for all pages, to be loaded once in the header.
+
+~clerk.js~ \\
+_{ makes ~Clerk(**args)~ available in window scope. }
+#+BEGIN_SRC html
+<script>
+(function(w,d){
+    const CLERK_INIT_CLASS = 'clerk_manual';
+    w.clerk_init_class = CLERK_INIT_CLASS;
+    var e=d.createElement('script');e.type='text/javascript';e.async=true;
+    e.src=(d.location.protocol=='https:'?'https':'http')+'://cdn.clerk.io/clerk.js';
+    var s=d.getElementsByTagName('script')[0];s.parentNode.insertBefore(e,s);
+    w.__clerk_q=w.__clerk_q||[];w.Clerk=w.Clerk||function(){ w.__clerk_q.push(arguments) };
+})(window,document);
+
+Clerk('config', {
+    key: 'PUBLIC_API_KEY'
+});
+</script>
+#+END_SRC
+
+
 * Utility Functions
 
 In order to keep the setup organized all functions used to retrieve contextual data, are stored in ~public/clerk-wix.js~ .
@@ -32,7 +56,7 @@ In order to keep the setup organized all functions used to retrieve contextual d
 These functions are imported in the element hydration scripts, in order to populate data before Clerk initialization.
 
 ~clerkGetCart()~ \\
-_{ gets cart object, contextually agnostic }
+_{ gets cart object, contextually agnostic. }
 #+BEGIN_SRC js
 export const clerkGetCart = async () => {
     const currentCart = await cart.getCurrentCart();
@@ -42,7 +66,7 @@ export const clerkGetCart = async () => {
 #+END_SRC
 
 ~clerkGetCartProducts()~ \\
-_{ gets product ids in cart, contextually agnostic }
+_{ gets product ids in cart, contextually agnostic. }
 #+BEGIN_SRC js
 export const clerkGetCartProducts = async () => {
 	const cart = await clerkGetCart();
@@ -54,7 +78,7 @@ export const clerkGetCartProducts = async () => {
 #+END_SRC
 
 ~clerkGetQuery()~ \\
-_{ gets gets value of q param if present, contextually agnostic }
+_{ gets gets value of q param if present, contextually agnostic. }
 #+BEGIN_SRC js
 export const clerkGetQuery = (wixLocation) => {
 	return wixLocation.query['q'];
