@@ -13,16 +13,16 @@ This poses a few restrictions in terms of data acccess while also imposing limit
 
 As a result the code for Clerk is segmented in 4 main sections:
 
-1. Affiliate tracking script.
+- Affiliate tracking script.
 _{ Clerk.js, located in a field outside the Editor or Theme }
 
-2. Utility Functions
+- Utility Functions
 _{ Utility function library located in the Theme "public" resource }
 
-3. Custom element scripts.
+- Custom element scripts.
 _{ A number of custom-element.js files located in the Theme "public/custom-elements" resource  }
 
-4. Element hydration scripts.
+- Element hydration scripts.
 _{ A number of snippets placed in the appropriate controllers page.js file which hydrate elements with contextual data before hydration }
 
 * Utility Functions
