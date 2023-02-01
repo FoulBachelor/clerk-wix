@@ -5,6 +5,7 @@
 #+DESCRIPTION: Guide document for implementing Clerk.io in Wix's React based WYSIWYG editor.
 #+KEYWORDS: wix, clerk.io, ecommerce, personalization, search, recommendations, embedcode, injection
 #+LANGUAGE: en
+#+STARTUP: hideblocks
 
 * Structure and Design
 
