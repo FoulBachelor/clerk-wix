@@ -56,7 +56,7 @@ In order to keep the setup organized all functions used to retrieve contextual d
 These functions are imported in the element hydration scripts, in order to populate data before Clerk initialization.
 
 ~clerkGetCart()~ \\
-_{ gets cart object, contextually agnostic. }
+_{ gets cart object, contex anywhere. }
 #+BEGIN_SRC js
 export const clerkGetCart = async () => {
     const currentCart = await cart.getCurrentCart();
@@ -66,7 +66,7 @@ export const clerkGetCart = async () => {
 #+END_SRC
 
 ~clerkGetCartProducts()~ \\
-_{ gets product ids in cart, contextually agnostic. }
+_{ gets product ids in cart, contex anywhere. }
 #+BEGIN_SRC js
 export const clerkGetCartProducts = async () => {
 	const cart = await clerkGetCart();
@@ -78,13 +78,30 @@ export const clerkGetCartProducts = async () => {
 #+END_SRC
 
 ~clerkGetQuery()~ \\
-_{ gets gets value of q param if present, contextually agnostic. }
+_{ gets value of q param if present, contex anywhere. }
 #+BEGIN_SRC js
 export const clerkGetQuery = (wixLocation) => {
 	return wixLocation.query['q'];
 }
 #+END_SRC
 
+~clerkGetProduct()~ \\
+_{ gets the current product id, context product page. }
+#+BEGIN_SRC js
+export const clerkGetProduct = async () => {
+	const product = await $w('#productPage1').getProduct();
+	return product?._id;
+}
+#+END_SRC
+
+~clerkGetOrder()~ \\
+_{ gets the current order, context thank you page. }
+#+BEGIN_SRC js
+export const clerkGetOrder = async () => {
+	const order = await $w('#thankYouPage1').getOrder();
+	return order;
+}
+#+END_SRC
 
 * Components
 
