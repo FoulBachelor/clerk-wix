@@ -55,6 +55,8 @@ In order to keep the setup organized all functions used to retrieve contextual d
 
 These functions are imported in the element hydration scripts, in order to populate data before Clerk initialization.
 
+** Data Retrieval
+
 ~clerkGetCart()~ \\
 _{ gets cart object, contex anywhere. }
 #+BEGIN_SRC js
@@ -100,6 +102,78 @@ _{ gets the current order, context thank you page. }
 export const clerkGetOrder = async () => {
 	const order = await $w('#thankYouPage1').getOrder();
 	return order;
+}
+#+END_SRC
+
+** Document Manipulation
+
+~clerkHydrateBasketTracking()~ \\
+_{ hydrates basket tracking, context anywhere. }
+#+BEGIN_SRC js
+export const clerkHydrateBasketTracking = async (selector_list=['']) => {
+	const product_ids = await clerkGetCartProducts();
+	selector_list.forEach(el => {
+		if($w(el).length !== 0){
+			$w(el).setAttribute('data-products', product_ids);
+		}
+	});
+}
+#+END_SRC
+
+~clerkHydrateSalesTracking()~ \\
+_{ hydrates sales tracking, context thank you page. }
+#+BEGIN_SRC js
+export const clerkHydrateSalesTracking = async (selector_list=['']) => {
+    const order_details = await clerkGetOrder();
+	const order_products = order_details.lineItems.map(line_item => {
+		return {id: line_item.productId, quantity: line_item.quantity, price: line_item.tax + line_item.priceData.price}
+	});
+	selector_list.forEach(el => {
+        if($w(el).length !== 0){
+            $w(el).setAttribute('data-sale', order_details._id);
+            $w(el).setAttribute('data-email', order_details.buyerInfo.email);
+            $w(el).setAttribute('data-products', order_products);
+        }
+	});
+}
+#+END_SRC
+
+~clerkHydrateCartSlider()~ \\
+_{ hydrates slider with product ids in cart, context anywhere. }
+#+BEGIN_SRC js
+export const clerkHydrateCartSlider = async (selector_list=['']) => {
+    const product_ids = await clerkGetCartProducts();
+	selector_list.forEach(el => {
+		if($w(el).length !== 0){
+			$w(el).setAttribute('data-products', `${JSON.stringify(product_ids)}`);
+		}
+	});
+}
+#+END_SRC
+
+~clerkHydrateProductSlider()~ \\
+_{ hydrates slider with current product id, context product page. }
+#+BEGIN_SRC js
+export const clerkHydrateProductSlider = async (selector_list=['']) => {
+    const product_id = await clerkGetProduct();
+	selector_list.forEach(el => {
+		if($w(el).length !== 0){
+			$w(el).setAttribute('data-products', `["${product_id}"]`);
+		}
+	});
+}
+#+END_SRC
+
+~clerkHydrateSearchPage()~ \\
+_{ hydrates search page with query, context search page. }
+#+BEGIN_SRC js
+export const clerkHydrateSearchPage = (selector_list=[''], wixLocation) => {
+    const query = clerkGetQuery(wixLocation);
+    selector_list.forEach(el => {
+        if($w(el).length !== 0){
+            $w(el).setAttribute('data-query', query);
+        }
+	});
 }
 #+END_SRC
 
