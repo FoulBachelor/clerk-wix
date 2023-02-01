@@ -487,7 +487,7 @@ customElements.define('clerk-basket-tracking', clerkBasketTracking);
 
 When [[https://support.wix.com/en/article/wix-editor-adding-a-custom-element-to-your-site][adding]] the blocks to the site, you can right click them and choose to show for all pages.
 
-This should be done for blocks that exist on all pages, like ~<clerk-backet-tracking>~ or ~<clerk-live-search>~.
+This should be done for blocks that exist on all pages, like ~<clerk-basket-tracking>~ or ~<clerk-live-search>~.
 These blocks are not rendered where they are positioned.
 
 For blocks that only live on a given template, such as a ~<clerk-slider>~, we only need to to place them as many times as we want on a template.
