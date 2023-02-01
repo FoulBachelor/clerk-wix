@@ -14,16 +14,16 @@ This poses a few restrictions in terms of data acccess while also imposing limit
 As a result the code for Clerk is segmented in 4 main sections:
 
 - Affiliate tracking script.
-_{ Clerk.js, located in a field outside the Editor or Theme }
+_{ Clerk.js, located in a field outside the Editor or Theme. }
 
 - Utility Functions
-_{ Utility function library located in the Theme ~public~ resource }
+_{ Utility function library located in the Theme ~public~ resource. }
 
 - Custom element scripts.
-_{ A number of custom-element.js files located in the Theme ~public/custom-elements~ resource  }
+_{ A number of custom-element.js files located in the Theme ~public/custom-elements~ resource.  }
 
 - Element hydration scripts.
-_{ A number of snippets placed in the appropriate controllers page.js file which hydrate elements with contextual data before hydration }
+_{ A number of snippets placed in the appropriate controllers page.js file which hydrate elements with contextual data before hydration. }
 
 * Utility Functions
 
@@ -31,7 +31,7 @@ In order to keep the setup organized all functions used to retrieve contextual d
 
 These functions are imported in the element hydration scripts, in order to populate data before Clerk initialization.
 
-clerkGetCart() \\
+~clerkGetCart()~ \\
 _{ gets cart object, contextually agnostic }
 #+BEGIN_SRC js
 export const clerkGetCart = async () => {
@@ -41,7 +41,7 @@ export const clerkGetCart = async () => {
 }
 #+END_SRC
 
-clerkGetCartProducts() \\
+~clerkGetCartProducts()~ \\
 _{ gets product ids in cart, contextually agnostic }
 #+BEGIN_SRC js
 export const clerkGetCartProducts = async () => {
@@ -53,7 +53,7 @@ export const clerkGetCartProducts = async () => {
 }
 #+END_SRC
 
-clerkGetQuery() \\
+~clerkGetQuery()~ \\
 _{ gets gets value of q param if present, contextually agnostic }
 #+BEGIN_SRC js
 export const clerkGetQuery = (wixLocation) => {
