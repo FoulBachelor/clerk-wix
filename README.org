@@ -20,7 +20,7 @@ _{ Clerk.js, located in a field outside the Editor or Theme }
 _{ Utility function library located in the Theme "public" resource }
 
 - Custom element scripts.
-_{ A number of custom-element.js files located in the Theme "public/custom-elements" resource  }
+_{ A number of custom-element.js files located in the Theme ~public/custom-elements~ resource  }
 
 - Element hydration scripts.
 _{ A number of snippets placed in the appropriate controllers page.js file which hydrate elements with contextual data before hydration }
