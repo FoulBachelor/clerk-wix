@@ -17,7 +17,7 @@ As a result the code for Clerk is segmented in 4 main sections:
 _{ Clerk.js, located in a field outside the Editor or Theme }
 
 - Utility Functions
-_{ Utility function library located in the Theme "public" resource }
+_{ Utility function library located in the Theme ~public~ resource }
 
 - Custom element scripts.
 _{ A number of custom-element.js files located in the Theme ~public/custom-elements~ resource  }
