@@ -27,13 +27,13 @@ _{ A number of snippets placed in the appropriate controllers page.js file which
 
 * Utility Functions
 
-In order to keep the setup organized all functions used to retrieve contextual data, are stored in src_javascript{"public/clerk-wix.js"}.
+In order to keep the setup organized all functions used to retrieve contextual data, are stored in src_js{"public/clerk-wix.js"}.
 
 These functions are imported in the element hydration scripts, in order to populate data before Clerk initialization.
 
 clerkGetCart() \\
 _{ gets cart object, contextually agnostic }
-#+BEGIN_SRC javascript
+#+BEGIN_SRC js
 export const clerkGetCart = async () => {
     const currentCart = await cart.getCurrentCart();
     const cartInfo = { cartId: currentCart._id, cartLineItems: currentCart.lineItems }
@@ -43,7 +43,7 @@ export const clerkGetCart = async () => {
 
 clerkGetCartProducts() \\
 _{ gets product ids in cart, contextually agnostic }
-#+BEGIN_SRC javascript
+#+BEGIN_SRC js
 export const clerkGetCartProducts = async () => {
 	const cart = await clerkGetCart();
     const product_ids = cart.cartLineItems.map(line_item => {
@@ -55,7 +55,7 @@ export const clerkGetCartProducts = async () => {
 
 clerkGetQuery() \\
 _{ gets gets value of q param if present, contextually agnostic }
-#+BEGIN_SRC javascript
+#+BEGIN_SRC js
 export const clerkGetQuery = (wixLocation) => {
 	return wixLocation.query['q'];
 }
