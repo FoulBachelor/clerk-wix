@@ -1,0 +1,9 @@
+#+TITLE: Clerk.io Wix Pixel and Widget
+#+AUTHOR: Alexander Bugge Stage
+#+EMAIL: abs@clerk.io
+
+#+DESCRIPTION: Guide document for implementing Clerk.io in Wix's React based WYSIWYG editor.
+#+KEYWORDS: wix, clerk.io, ecommerce, personalization, search, recommendations, embedcode, injection
+#+ÆANGUAGE: en
+# clerk-wix
+Clerk.io Wix frontend implementation.
