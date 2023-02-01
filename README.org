@@ -179,7 +179,7 @@ export const clerkHydrateSearchPage = (selector_list=[''], wixLocation) => {
 
 * Components
 
-Components are created as Custom Elements. All elements create for Clerk use the following pattern ~clerk-*~ .
+Components are created as Custom Elements. All elements created for Clerk use the following pattern ~clerk-*~ in the tag naming convention.
 
 ~<clerk-slider>~ \\
 _{ clerk slider element, context anywhere. }
@@ -248,6 +248,238 @@ class clerkSlider extends HTMLElement {
 }
 
 customElements.define('clerk-slider', clerkSlider);
+#+END_SRC
+
+~<clerk-live-search>~ \\
+_{ clerk live search element, context anywhere. }
+#+BEGIN_SRC js
+// Attributes with significance which are expected to be static.
+const RESERVED_ATTRIBUTES = [
+	'template',
+	'instant-search',
+    'instant-search-suggestions',
+    'instant-search-categories',
+    'instant-search-pages',
+    'instant-search-positioning'
+];
+
+class clerkLiveSearch extends HTMLElement {
+	constructor() {
+		super();
+	}
+
+	static get observedAttributes() {
+		return RESERVED_ATTRIBUTES;
+	}
+
+	attributeChangedCallback(name, oldValue, newValue) {
+		if(this && newValue){
+			if(RESERVED_ATTRIBUTES.includes(name)) {
+				this.removeAttribute(name);
+			}
+			if(name === 'template'){
+				// If input template, set data attribute and force ID on element
+				this.dataset.template = newValue;
+				this.id = newValue.replace('@', '');
+			}
+			if(name === 'instant-search'){
+				this.dataset.instantSearch = newValue;
+			}
+            if(name === 'instant-search-suggestions'){
+				this.dataset.instantSearchSuggestions = newValue;
+			}
+            if(name === 'instant-search-categories'){
+				this.dataset.instantSearchCategories = newValue;
+			}
+            if(name === 'instant-search-pages'){
+				this.dataset.instantSearchPages = newValue;
+			}
+            if(name === 'instant-search-positioning'){
+				this.dataset.instantSearchPositioning = newValue;
+			}
+		}
+	}
+
+	connectedCallback() {
+        // Setting Default values and propagating event.
+		this.className = window.clerk_init_class;
+        this.dataset.template = '@live-search';
+        this.dataset.instantSearch = 'input[type="search"]';
+		this.dataset.instantSearchSuggestions = 5;
+		this.dataset.instantSearchCategories = 5;
+		this.dataset.instantSearchPages = 5;
+		this.dataset.instantSearchPositioning = 'left';
+		window.Clerk('content', `.${window.clerk_init_class}`);
+	}
+
+}
+
+customElements.define('clerk-live-search', clerkLiveSearch);
+#+END_SRC
+
+~<clerk-search>~ \\
+_{ clerk search page element, context search page. }
+#+BEGIN_SRC js
+// Attributes with significance which are expected to be static.
+const RESERVED_ATTRIBUTES = [
+	'template',
+    'target',
+	'facets-target',
+    'facets-attributes',
+    'facets-titles',
+    'facets-price-prepend',
+    'facets-in-url',
+    'facets-view-more-text',
+    'facets-searchbox-text',
+    'facets-design'
+];
+
+const DEFAULT_INNER_HTML = `<div id="clerk-search-page-wrap">
+                                <div id="clerk-facets-wrap">
+                                    <div id="clerk-facet-toggle"></div>
+                                    <div id="clerk-search-filters"></div>
+                                </div>
+                                <div id="clerk-search-results"></div>
+                            </div>`;
+
+
+const mutationCallback = (mutationsList) => {
+    for (const mutation of mutationsList) {
+        if (
+        mutation.attributeName !== "data-query"
+        ) {
+        return
+        }
+        mutation.target.removeAttribute('data-clerk-content-id');
+        mutation.target.innerHTML = DEFAULT_INNER_HTML;
+        window.Clerk('content', `.${window.clerk_init_class}`);
+    }
+}
+
+const observer = new MutationObserver(mutationCallback);
+
+class clerkSearch extends HTMLElement {
+	constructor() {
+		super();
+	}
+
+	static get observedAttributes() {
+		return RESERVED_ATTRIBUTES;
+	}
+
+	attributeChangedCallback(name, oldValue, newValue) {
+		if(this && newValue){
+			if(RESERVED_ATTRIBUTES.includes(name)) {
+				this.removeAttribute(name);
+			}
+			if(name === 'template'){
+				// If input template, set data attribute and force ID on element
+				this.dataset.template = newValue;
+				this.id = newValue.replace('@', '');
+			}
+			if(name === 'target'){
+				this.dataset.target = newValue;
+			}
+			if(name === 'facets-target'){
+				this.dataset.facetsTarget = newValue;
+			}
+            if(name === 'facets-attributes'){
+                this.dataset.facetsAttributes = newValue;
+            }
+            if(name === 'facets-titles'){
+                this.dataset.facetsTitles = newValue;
+            }
+            if(name === 'facets-price-prepend'){
+                this.dataset.facetsPricePrepend = newValue;
+            }
+            if(name === 'facets-in-url'){
+                this.dataset.facetsInUrl = newValue;
+            }
+            if(name === 'facets-view-more-text'){
+                this.dataset.facetsViewMoreText = newValue;
+            }
+            if(name === 'facets-design'){
+                this.dataset.facetsDesign = newValue;
+            }
+		}
+	}
+
+	disconnectedCallback() {
+		observer.disconnect();
+	}
+
+	connectedCallback() {
+        // Setting Default values and propagating event.
+		this.className = window.clerk_init_class;
+        this.dataset.template = '@search-page';
+        this.dataset.target = '#clerk-search-results';
+        this.dataset.facetsTarget = '#clerk-search-filters';
+        this.innerHTML = DEFAULT_INNER_HTML;
+		window.Clerk('content', `.${window.clerk_init_class}`);
+		observer.observe(this, {attributes: true, childList: false, characterData: false});
+	}
+
+}
+
+customElements.define('clerk-search', clerkSearch);
+#+END_SRC
+
+~<clerk-sales-tracking>~ \\
+_{ sales tracking element, context thank you page. }
+#+BEGIN_SRC js
+class clerkSalesTracking extends HTMLElement {
+	constructor() {
+		super();
+	}
+
+	connectedCallback() {
+		this.className = window.clerk_init_class;
+        this.dataset.api = 'log/sale';
+		window.Clerk('content', `.${window.clerk_init_class}`);
+	}
+
+}
+
+customElements.define('clerk-sales-tracking', clerkSalesTracking);
+#+END_SRC
+
+~<clerk-backet-tracking>~ \\
+_{ clerk basket tracking element, context anywhere. }
+#+BEGIN_SRC js
+const mutationCallback = (mutationsList) => {
+    for (const mutation of mutationsList) {
+        if (
+        mutation.attributeName !== "data-products"
+        ) {
+        return
+        }
+        mutation.target.removeAttribute('data-clerk-content-id');
+        mutation.target.innerHTML = '';
+        window.Clerk('content', `.${window.clerk_init_class}`);
+    }
+}
+
+const observer = new MutationObserver(mutationCallback);
+
+class clerkBasketTracking extends HTMLElement {
+	constructor() {
+		super();
+	}
+
+	disconnectedCallback() {
+		observer.disconnect();
+	}
+
+	connectedCallback() {
+		this.className = window.clerk_init_class;
+        this.dataset.api = 'log/basket/set';
+		window.Clerk('content', `.${window.clerk_init_class}`);
+		observer.observe(this, {attributes: true, childList: false, characterData: false});
+	}
+}
+
+customElements.define('clerk-basket-tracking', clerkBasketTracking);
+
 #+END_SRC
 
 * Implementation
