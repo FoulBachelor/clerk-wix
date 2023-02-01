@@ -485,6 +485,32 @@ customElements.define('clerk-basket-tracking', clerkBasketTracking);
 
 * Implementation
 
+When [[https://support.wix.com/en/article/wix-editor-adding-a-custom-element-to-your-site][adding]] the blocks to the site, you can right click them and choose to show for all pages.
+
+This should be done for blocks that exist on all pages, like ~<clerk-backet-tracking>~ or ~<clerk-live-search>~.
+These blocks are not rendered where they are positioned.
+
+For blocks that only live on a given template, such as a ~<clerk-slider>~, we only need to to place them as many times as we want on a template.
+We drag and resize them to the proper position, as this is where they will be shown.
+
+Any block can be nested in any column or strip non-custom component.
+
+The height given to a block in the WYSIWYG editor, is the minimum height not the auto or the max.
+
+Any block can be set to have default values for ~hidden~ and ~collapsed~.
+
+~hidden~
+_{ visibility: hidden; }
+
+~collapsed~
+_{ display: none; }
+
+All blocks have a list of reserved attributes you can configure on them in the WYSIWYG editor.
+
+The attributes follow the same structure our normal embedcodes do, with the ~data-*~ prefix removed.
+Eg. ~data-template => template~
+
+
 * Debugging
 
 * References
@@ -493,6 +519,6 @@ https://www.wix.com/velo/reference/api-overview/introduction
 
 https://www.wix.com/velo/reference/$w
 
-https://support.wix.com/en/article/wix-editor-adding-a-custom-element-to-your-site
+
 
 https://support.wix.com/en/article/embedding-custom-code-on-your-site
