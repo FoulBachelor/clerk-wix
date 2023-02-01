@@ -32,7 +32,7 @@ In order to keep the setup organized all functions used to retrieve contextual d
 These functions are imported in the element hydration scripts, in order to populate data before Clerk initialization.
 
 clerkGetCart()
-
+_{ gets cart object, contextually agnostic }
 #+BEGIN_SRC javascript
 export const clerkGetCart = async () => {
     const currentCart = await cart.getCurrentCart();
@@ -40,10 +40,9 @@ export const clerkGetCart = async () => {
     return cartInfo;
 }
 #+END_SRC
-_{ gets cart object, contextually agnostic }
 
 clerkGetCartProducts()
-
+_{ gets product ids in cart, contextually agnostic }
 #+BEGIN_SRC javascript
 export const clerkGetCartProducts = async () => {
 	const cart = await clerkGetCart();
@@ -53,17 +52,14 @@ export const clerkGetCartProducts = async () => {
 	return product_ids;
 }
 #+END_SRC
-_{ gets product ids in cart, contextually agnostic }
 
 clerkGetQuery()
-
+_{ gets gets value of q param if present, contextually agnostic }
 #+BEGIN_SRC javascript
 export const clerkGetQuery = (wixLocation) => {
 	return wixLocation.query['q'];
 }
 #+END_SRC
-_{ gets gets value of q param if present, contextually agnostic }
-
 
 
 * Components
